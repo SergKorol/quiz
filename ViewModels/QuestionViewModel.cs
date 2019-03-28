@@ -5,21 +5,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestMakerFreeWebApp_Chapter_01.ViewModels
+namespace quiz.ViewModels
 {
     [JsonObject(MemberSerialization.OptOut)]
     public class QuestionViewModel
     {
         public QuestionViewModel()
         {
-            
+
         }
 
         public int Id { get; set; }
         public int QuizId { get; set; }
         public string Text { get; set; }
         public string Notes { get; set; }
-        [DefaultValue(0)] 
+        [DefaultValue(0)]
         public int Type { get; set; }
         [DefaultValue(0)]
         public int Flags { get; set; }

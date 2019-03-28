@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using TestMakerFreeWebApp_Chapter_01.ViewModels;
+using quiz.ViewModels;
 
-namespace TestMakerFreeWebApp_Chapter_01.Controllers
+namespace quiz.Controllers
 {
     [Route("api/[controller]")]
     public class QuizController : Controller

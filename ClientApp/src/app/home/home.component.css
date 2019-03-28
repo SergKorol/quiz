@@ -1,0 +1,20 @@
+app-quiz-list {
+  width: 360px;
+  display: block;
+  padding: 2px 20px;
+  margin: 0px 5px;
+  float: left;
+}
+
+app-quiz-list.latest {
+  background-color: #f0f0f0;
+}
+
+app-quiz-list.byTitle {
+  background-color: #e0e0e0;
+}
+
+app-quiz-list.random {
+  background-color: #d0d0d0;
+}
+

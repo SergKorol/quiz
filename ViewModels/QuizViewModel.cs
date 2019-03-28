@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace TestMakerFreeWebApp_Chapter_01.ViewModels
+namespace quiz.ViewModels
 {
     [JsonObject(MemberSerialization.OptOut)]
     public class QuizViewModel
