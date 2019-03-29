@@ -168,7 +168,7 @@ namespace quiz.Data
                             int viewCount,
                             int numberOfQuestions,
                             int numberOfAnswersPerQuestion,
-                            int numberOfResult,
+                            int numberOfResults,
                             DateTime createdDate)
         {
             var quiz = new Quiz()

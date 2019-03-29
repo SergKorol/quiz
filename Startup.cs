@@ -51,6 +51,18 @@ namespace quiz
                 app.UseHsts();
             }
 
+            //DbSeeder.Seed(dbContext);
+
+            // Create a service scope to get an ApplicationDbContext instance using DI
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                // Create the Db if it doesn't exist and applies any pending migration.
+                dbContext.Database.Migrate();
+                // Seed the Db.
+                DbSeeder.Seed(dbContext);
+            }
+
             app.UseHttpsRedirection();
             //app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
