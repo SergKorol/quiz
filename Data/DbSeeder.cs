@@ -161,6 +161,17 @@ namespace quiz.Data
         /// <param name="userId">the author ID</param>
         /// <param name="id">the quiz ID</param>
         /// <param name="createdDate">the quiz CreatedDate</param>
+        private static void CreateSampleQuiz(
+                            ApplicationDbContext dbContext,
+                            int num,
+                            string authorId,
+                            int viewCount,
+                            int numberOfQuestions,
+                            int numberOfAnswersPerQuestion,
+                            int numberOfResult,
+                            DateTime createdDate)
+        {
 
+        }
     }
 }
