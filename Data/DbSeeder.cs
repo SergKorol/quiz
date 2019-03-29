@@ -85,7 +85,25 @@ namespace quiz.Data
             // retrieve the admin user, which we'll use as default author.
             var authorId = dbContext.Users.Where(u => u.UserName == "Admin").FirstOrDefault().Id;
 
-
+#if DEBUG
+            // create 47 sample quizzes with auto-generated data
+            // (including questions, answers & results)
+            var num = 47;
+            for (int i = 1; i <= num; i++)
+            {
+                CreateSampleQuiz(
+                dbContext,
+                i,
+                authorId,
+                num - 1,
+                3,
+                3,
+                3,
+                createdDate.AddDays(-num));
+            }
+#endif
+            // create 3 more quizzes with better descriptive data
+            // (we'll add the questions, answers & results later on)
         }
     }
 }
