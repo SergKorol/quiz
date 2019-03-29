@@ -77,5 +77,15 @@ namespace quiz.Data
 #endif
             dbContext.SaveChanges();
         }
+        private static void CreateQuizzes(ApplicationDbContext dbContext)
+        {
+            // local variables
+            DateTime createdDate = new DateTime(2016, 03, 01, 12, 30, 00);
+            DateTime lastModifiedDate = DateTime.Now;
+            // retrieve the admin user, which we'll use as default author.
+            var authorId = dbContext.Users.Where(u => u.UserName == "Admin").FirstOrDefault().Id;
+
+
+        }
     }
 }
