@@ -171,7 +171,63 @@ namespace quiz.Data
                             int numberOfResult,
                             DateTime createdDate)
         {
+            var quiz = new Quiz()
+            {
+                UserId = authorId,
+                Title = String.Format("Quiz {0} Title", num),
+                Description = String.Format("This is a sample description for quiz { 0 }.", num),
+                Text = "This is a sample quiz created by the DbSeeder class for testing purposes. " +
+                        "All the questions, answers & results are auto-generated as well.",
+                ViewCount = viewCount,
+                CreatedDate = createdDate,
+                LastModifiedDate = createdDate
+            };
 
+            dbContext.Quizzes.Add(quiz);
+            dbContext.SaveChanges();
+
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                var question = new Question()
+                {
+                    QuizId = quiz.Id,
+                    Text = "This is a sample question created by the DbSeeder class for testing purposes. " +
+                            "All the child answers are auto-generated as well.",
+                    CreatedDate = createdDate,
+                    LastModifiedDate = createdDate
+                };
+
+                dbContext.Questions.Add(question);
+                dbContext.SaveChanges();
+
+                for (int i2 = 0; i2 < numberOfAnswersPerQuestion; i2++)
+                {
+                    var e2 = dbContext.Answers.Add(new Answer()
+                    {
+                        QuestionId = question.Id,
+                        Text = "This is a sample answer created by the DbSeeder class for testing purposes. ",
+                        Value = i2,
+                        CreatedDate = createdDate,
+                        LastModifiedDate = createdDate
+                    });
+                }
+            }
+
+            for (int i = 0; i < numberOfResults; i++)
+            {
+                dbContext.Results.Add(new Result()
+                {
+                    QuizId = quiz.Id,
+                    Text = "This is a sample result created by the DbSeeder class for testing purposes. ",
+                    MinValue = 0,
+                    // max value should be equal to answers number * max answer value
+                    MaxValue = numberOfAnswersPerQuestion * 2,
+                    CreatedDate = createdDate,
+                    LastModifiedDate = createdDate
+                });
+            }
+            dbContext.SaveChanges();
         }
+        #endregion
     }
 }
