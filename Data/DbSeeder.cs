@@ -104,6 +104,63 @@ namespace quiz.Data
 #endif
             // create 3 more quizzes with better descriptive data
             // (we'll add the questions, answers & results later on)
+
+            EntityEntry<Quiz> e1 = dbContext.Quizzes.Add(new Quiz()
+            {
+                UserId = authorId,
+                Title = "Are you more Light or Dark side of the Force?",
+                Description = @"Star Wars personality test",
+                Text = "Choose wisely you must, young padawan: " +
+                "this test will prove if your will is strong enough " +
+                "to adhere to the principles of the light side of the Force" +
+                "or if you're fated to embrace the dark side. " + "" +
+                "No you want to become a true JEDI, you can't possibly miss this!",
+                ViewCount = 2343,
+                CreatedDate = createdDate,
+                LastModifiedDate = lastModifiedDate
+            });
+
+            EntityEntry<Quiz> e2 = dbContext.Quizzes.Add(new Quiz()
+            {
+                UserId = authorId,
+                Title = "GenX, GenY or Genz?",
+                Description = "Find out what decade most represents you",
+                Text = "Do you feel confortable in your generation? " +
+                        "What year should you have been born in?" +
+                        "Here's a bunch of questions that will help you to find out!",
+                ViewCount = 4148,
+                CreatedDate = createdDate,
+                LastModifiedDate = lastModifiedDate
+            });
+
+            EntityEntry<Quiz> e3 = dbContext.Quizzes.Add(new Quiz()
+            {
+                UserId = authorId,
+                Title = "Which Shingeki No Kyojin character are you?",
+                Description = "Attack On Titan personality test",
+                Text = @"Do you relentlessly seek revenge like Eren? " +
+                        "Are you willing to put your like on the stake to protect your friends like Mikasa? " +
+                        "Would you trust your fighting skills like Levi " +
+                        "or rely on your strategies and tactics like Arwin? " +
+                        "Unveil your true self with this Attack On Titan personality test!",
+                ViewCount = 5203,
+                CreatedDate = createdDate,
+                LastModifiedDate = lastModifiedDate
+            });
+
+            // persist the changes on the Database
+            dbContext.SaveChanges();
         }
+        #endregion
+
+        #region Utility Methods
+        /// <summary>
+        /// Creates a sample quiz and add it to the Database
+        /// together with a sample set of questions, answers & results.
+        /// </summary>
+        /// <param name="userId">the author ID</param>
+        /// <param name="id">the quiz ID</param>
+        /// <param name="createdDate">the quiz CreatedDate</param>
+
     }
 }
