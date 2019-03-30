@@ -175,7 +175,7 @@ namespace quiz.Data
             {
                 UserId = authorId,
                 Title = String.Format("Quiz {0} Title", num),
-                Description = String.Format("This is a sample description for quiz { 0 }.", num),
+                Description = String.Format("This is a sample description for quiz {0}.", num),
                 Text = "This is a sample quiz created by the DbSeeder class for testing purposes. " +
                         "All the questions, answers & results are auto-generated as well.",
                 ViewCount = viewCount,
