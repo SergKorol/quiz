@@ -1,3 +1,4 @@
+import { QuizEditComponent } from './quiz/quiz-edit.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
@@ -24,6 +25,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FetchDataComponent,
     QuizListComponent,
     QuizComponent,
+    QuizEditComponent,
     AboutComponent,
     LoginComponent,
     PagenotfoundComponent
@@ -35,6 +37,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
+      { path: 'quiz/create', component: QuizEditComponent },
+      { path: 'quiz/edit/:id', component: QuizEditComponent },
       { path: 'quiz/:id', component: QuizComponent },
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
