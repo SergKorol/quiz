@@ -1,3 +1,4 @@
+import { AnswerListComponent } from './answer/answer-list.component';
 import { QuestionEditComponent } from './question/question-edit.component';
 import { QuestionListComponent } from './question/question-list.component';
 import { QuizEditComponent } from './quiz/quiz-edit.component';
@@ -17,6 +18,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AnswerEditComponent } from './answer/answer-edit.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     LoginComponent,
     PagenotfoundComponent,
     QuestionListComponent,
-    QuestionEditComponent
+    QuestionEditComponent,
+    AnswerListComponent,
+    AnswerEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,8 +48,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: 'quiz/create', component: QuizEditComponent },
       { path: 'quiz/edit/:id', component: QuizEditComponent },
       { path: 'quiz/:id', component: QuizComponent },
-      {path: 'question/create/:id', component: QuestionEditComponent},
-      {path: 'question/edit/:id', component: QuestionEditComponent},
+      { path: 'question/create/:id', component: QuestionEditComponent},
+      { path: 'question/edit/:id', component: QuestionEditComponent},
+      { path: 'answer/create/:id', component: AnswerEditComponent },
+      { path: 'answer/edit/:id', component: AnswerEditComponent },
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
