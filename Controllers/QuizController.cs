@@ -9,19 +9,10 @@ using Mapster;
 
 namespace quiz.Controllers
 {
-    [Route("api/[controller]")]
-    public class QuizController : Controller
+    public class QuizController : BaseApiController
     {
-        #region Private Fields
-        private ApplicationDbContext DbContext;
-        #endregion
-
         #region Constructor
-        public QuizController(ApplicationDbContext context)
-        {
-            // Instantiate the ApplicationDbContext through DI
-            DbContext = context;
-        }
+        public QuizController(ApplicationDbContext context) : base(context) { }
         #endregion Constructor
 
 
@@ -49,12 +40,7 @@ namespace quiz.Controllers
 
 
             // output the result in JSON format
-            return new JsonResult(
-                quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         /// <summary>
@@ -92,11 +78,7 @@ namespace quiz.Controllers
             DbContext.SaveChanges();
 
             // return the newly-created Quiz to the client.
-            return new JsonResult(quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         /// <summary>
@@ -139,11 +121,7 @@ namespace quiz.Controllers
 
             // return the updated Quiz to the client.
 
-            return new JsonResult(quiz.Adapt<QuizViewModel>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(quiz.Adapt<QuizViewModel>(), JsonSettings);
         }
 
         /// <summary>
@@ -196,12 +174,7 @@ namespace quiz.Controllers
                 .ToArray();
 
             // output the result in JSON format
-            return new JsonResult(
-                latest.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(latest.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         /// <summary>
@@ -218,12 +191,7 @@ namespace quiz.Controllers
                 .Take(num)
                 .ToArray();
 
-            return new JsonResult(
-                byTitle.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(byTitle.Adapt<QuizViewModel[]>(), JsonSettings);
         }
 
         /// <summary>
@@ -240,12 +208,7 @@ namespace quiz.Controllers
                 .Take(num)
                 .ToArray();
 
-            return new JsonResult(
-                random.Adapt<QuizViewModel[]>(),
-                new JsonSerializerSettings()
-                {
-                    Formatting = Formatting.Indented
-                });
+            return new JsonResult(random.Adapt<QuizViewModel[]>(), JsonSettings);
         }
         #endregion
     }
