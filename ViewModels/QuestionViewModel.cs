@@ -10,11 +10,14 @@ namespace quiz.ViewModels
     [JsonObject(MemberSerialization.OptOut)]
     public class QuestionViewModel
     {
+        #region Constructor
         public QuestionViewModel()
         {
 
         }
+        #endregion
 
+        #region Properties
         public int Id { get; set; }
         public int QuizId { get; set; }
         public string Text { get; set; }
@@ -26,5 +29,6 @@ namespace quiz.ViewModels
         [JsonIgnore]
         public DateTime CreatedDate { get; set; }
         public DateTime LastModifiedDate { get; set; }
+        #endregion
     }
 }

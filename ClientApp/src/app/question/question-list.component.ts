@@ -36,9 +36,9 @@ export class QuestionListComponent implements OnChanges {
     }, error => console.log(error));
   }
 
-  onCreate(question: Question) {
-    this.router.navigate(['/question/create', question.Id]);
-  }
+  onCreate() {
+    this.router.navigate(['/question/create', this.quiz.Id]);
+}
 
   onEdit(question: Question) {
     this.router.navigate(['/question/edit', question.Id]);

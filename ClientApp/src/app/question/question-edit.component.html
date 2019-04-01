@@ -1,15 +1,16 @@
 <h2>{{title}}</h2>
 <div class="question-edit">
-  <div>
-    <label for="text">Question test: </label>
-    <br>
-    <textarea id="text" [(ngModel)]="question.Text" placeholder="enter a suitable text..." ></textarea>
-  </div>
-  <div>
-    <input type="button" value="Apply changes" (click)="onSubmit(quiz)" >
-    <input type="button" value="Create the Quiz!" (click)="onSubmit(quiz)" >
-    <input type="button" value="Cancel" (click)="onBack()" >
-  </div>
-  <app-answer-list *ngIf="editMode" [question]="question"></app-answer-list>
-</div>
+    <div>
+        <label for="text">Question text:</label>
+        <br />
+        <textarea id="text" [(ngModel)]="question.Text" placeholder="enter a suitable text..."></textarea>
+    </div>
+    <div>
+        <input *ngIf="editMode" type="button" value="Apply Changes" (click)="onSubmit(question)" />
+        <input *ngIf="!editMode" type="button" value="Create the Question!" (click)="onSubmit(question)" />
+        <input type="button" value="Cancel" (click)="onBack()" />
+    </div>
 
+    <app-answer-list *ngIf="editMode" [question]="question"></app-answer-list>
+
+</div>

@@ -11,8 +11,9 @@ namespace quiz.Controllers
 {
     public class ResultController : BaseApiController
     {
-        #region
-        public ResultController(ApplicationDbContext context) : base(context) { }
+        #region Constructor
+        public ResultController(ApplicationDbContext context)
+            : base(context) { }
         #endregion
 
         #region RESTful conventions methods
@@ -24,18 +25,18 @@ namespace quiz.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var result = DbContext.Results.Where(i => i.Id == id).FirstOrDefault();
-            // handle requests asking for non-existing results
-            if (result == null)
+            var result = DbContext.Results.Where(i => i.Id == id)
+                .FirstOrDefault();
+
+            // handle requests asking for non-existing quizzes
+            if (result == null) return NotFound(new
             {
-                return NotFound(new
-                {
-                    Error = String.Format("Result ID {0} has not been found", id)
-                });
-            }
+                Error = String.Format("Result ID {0} has not been found", id)
+            });
 
             return new JsonResult(
-            result.Adapt<ResultViewModel>(), JsonSettings);
+                result.Adapt<ResultViewModel>(),
+                JsonSettings);
         }
 
         /// <summary>
@@ -43,17 +44,17 @@ namespace quiz.Controllers
         /// </summary>
         /// <param name="model">The ResultViewModel containing the data to insert</param>
         [HttpPut]
-        public IActionResult Put(ResultViewModel model)
+        public IActionResult Put([FromBody]ResultViewModel model)
         {
             // return a generic HTTP Status 500 (Server Error)
             // if the client payload is invalid.
-
             if (model == null) return new StatusCodeResult(500);
 
             // map the ViewModel to the Model
             var result = model.Adapt<Result>();
-            // override those properties
-            // that should be set from the server-side only
+
+            // override those properties 
+            //   that should be set from the server-side only
             result.CreatedDate = DateTime.Now;
             result.LastModifiedDate = result.CreatedDate;
 
@@ -61,9 +62,10 @@ namespace quiz.Controllers
             DbContext.Results.Add(result);
             // persist the changes into the Database.
             DbContext.SaveChanges();
-            // return the newly-created Result to the client.
 
-            return new JsonResult(result.Adapt<ResultViewModel>(), JsonSettings);
+            // return the newly-created Result to the client.
+            return new JsonResult(result.Adapt<ResultViewModel>()
+                , JsonSettings);
         }
 
         /// <summary>
@@ -71,31 +73,25 @@ namespace quiz.Controllers
         /// </summary>
         /// <param name="model">The ResultViewModel containing the data to update</param>
         [HttpPost]
-        public IActionResult Post(ResultViewModel model)
+        public IActionResult Post([FromBody]ResultViewModel model)
         {
             // return a generic HTTP Status 500 (Server Error)
             // if the client payload is invalid.
-
             if (model == null) return new StatusCodeResult(500);
 
             // retrieve the result to edit
+            var result = DbContext.Results.Where(q => q.Id ==
+                        model.Id).FirstOrDefault();
 
-            var result = DbContext.Results.Where(q => q.Id == model.Id).FirstOrDefault();
-
-            // handle requests asking for non-existing results
-
-            if (result == null)
+            // handle requests asking for non-existing quizzes
+            if (result == null) return NotFound(new
             {
-                return NotFound(new
-                {
-                    Error = String.Format("Result ID {0} has not been found", model.Id)
-                });
-            }
+                Error = String.Format("Result ID {0} has not been found", model.Id)
+            });
 
             // handle the update (without object-mapping)
-            // by manually assigning the properties
-            // we want to accept from the request
-
+            //   by manually assigning the properties 
+            //   we want to accept from the request
             result.QuizId = model.QuizId;
             result.Text = model.Text;
             result.MinValue = model.MinValue;
@@ -109,7 +105,8 @@ namespace quiz.Controllers
             DbContext.SaveChanges();
 
             // return the updated Quiz to the client.
-            return new JsonResult(result.Adapt<ResultViewModel>(), JsonSettings);
+            return new JsonResult(result.Adapt<ResultViewModel>()
+                , JsonSettings);
         }
 
         /// <summary>
@@ -120,17 +117,14 @@ namespace quiz.Controllers
         public IActionResult Delete(int id)
         {
             // retrieve the result from the Database
-            var result = DbContext.Results.Where(i => i.Id == id).FirstOrDefault();
+            var result = DbContext.Results.Where(i => i.Id == id)
+                .FirstOrDefault();
 
             // handle requests asking for non-existing results
-
-            if (result == null)
+            if (result == null) return NotFound(new
             {
-                return NotFound(new
-                {
-                    Error = String.Format("Result ID {0} has not been found", id)
-                });
-            }
+                Error = String.Format("Result ID {0} has not been found", id)
+            });
 
             // remove the quiz from the DbContext.
             DbContext.Results.Remove(result);
@@ -138,17 +132,26 @@ namespace quiz.Controllers
             DbContext.SaveChanges();
 
             // return an HTTP Status 200 (OK).
-            return new OkResult();
+            // return new OkResult();
+
+            // [2018.01.26] BOOK ERRATA: return a NoContentResult to comply with a bug in the Angular 5 HttpRouter (fixed on December 2017, see here: https://github.com/angular/angular/issues/19502) which expects a JSON by default 
+            // and will throw a SyntaxError: Unexpected end of JSON input in case of an HTTP 200 result with no content.
+            // ref.: https://github.com/angular/angular/issues/19502
+            // ref.: https://github.com/PacktPublishing/ASP.NET-Core-2-and-Angular-5/issues/19
+            return new NoContentResult();
         }
         #endregion
 
-        // GET api/question/all
+        // GET api/result/all
         [HttpGet("All/{quizId}")]
         public IActionResult All(int quizId)
         {
-            var results = DbContext.Results.Where(q => q.QuizId == quizId).ToArray();
+            var results = DbContext.Results
+                .Where(q => q.QuizId == quizId)
+                .ToArray();
             return new JsonResult(
-            results.Adapt<ResultViewModel>(), JsonSettings);
+                results.Adapt<ResultViewModel[]>(),
+                JsonSettings);
         }
     }
 }

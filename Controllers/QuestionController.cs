@@ -47,34 +47,24 @@ namespace quiz.Controllers
         {
             // return a generic HTTP Status 500 (Server Error)
             // if the client payload is invalid.
-            if (model == null)
-            {
-                return new StatusCodeResult(500);
-            }
+            if (model == null) return new StatusCodeResult(500);
 
             // map the ViewModel to the Model
             var question = model.Adapt<Question>();
 
-            // override those properties
-            // that should be set from the server-side only
-
-            question.QuizId = model.QuizId;
-            question.Text = model.Text;
-            question.Notes = model.Notes;
-
-            // properties set from server-side
-
+            // override those properties 
+            //   that should be set from the server-side only
             question.CreatedDate = DateTime.Now;
             question.LastModifiedDate = question.CreatedDate;
 
             // add the new question
             DbContext.Questions.Add(question);
-            // persist the changes into the Database.
+            // persist the changes into the Database
             DbContext.SaveChanges();
 
-            // return the newly-created Question to the client.
-
-            return new JsonResult(question.Adapt<QuestionViewModel>(), JsonSettings);
+            // return the newly-created Question to the client
+            return new JsonResult(question.Adapt<QuestionViewModel>()
+                , JsonSettings);
         }
 
         /// <summary>
