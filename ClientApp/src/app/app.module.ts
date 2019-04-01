@@ -1,3 +1,4 @@
+import { ResultListComponent } from './result/result-list.component';
 import { AnswerListComponent } from './answer/answer-list.component';
 import { QuestionEditComponent } from './question/question-edit.component';
 import { QuestionListComponent } from './question/question-list.component';
@@ -19,6 +20,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AnswerEditComponent } from './answer/answer-edit.component';
+import { ResultEditComponent } from './result/result-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { AnswerEditComponent } from './answer/answer-edit.component';
     QuestionListComponent,
     QuestionEditComponent,
     AnswerListComponent,
-    AnswerEditComponent
+    AnswerEditComponent,
+    ResultListComponent,
+    ResultEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,6 +56,8 @@ import { AnswerEditComponent } from './answer/answer-edit.component';
       { path: 'question/edit/:id', component: QuestionEditComponent},
       { path: 'answer/create/:id', component: AnswerEditComponent },
       { path: 'answer/edit/:id', component: AnswerEditComponent },
+      { path: 'result/create/:id', component: ResultEditComponent },
+      { path: 'result/edit/:id', component: ResultEditComponent },
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
