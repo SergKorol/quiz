@@ -1,3 +1,5 @@
+import { QuestionEditComponent } from './question/question-edit.component';
+import { QuestionListComponent } from './question/question-list.component';
 import { QuizEditComponent } from './quiz/quiz-edit.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { LoginComponent } from './login/login.component';
@@ -28,7 +30,9 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     QuizEditComponent,
     AboutComponent,
     LoginComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    QuestionListComponent,
+    QuestionEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,6 +44,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: 'quiz/create', component: QuizEditComponent },
       { path: 'quiz/edit/:id', component: QuizEditComponent },
       { path: 'quiz/:id', component: QuizComponent },
+      {path: 'question/create/:id', component: QuestionEditComponent},
+      {path: 'question/edit/:id', component: QuestionEditComponent},
       { path: 'about', component: AboutComponent },
       { path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
