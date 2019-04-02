@@ -6,9 +6,15 @@
         <textarea id="text" [(ngModel)]="question.Text" placeholder="enter a suitable text..."></textarea>
     </div>
     <div>
-        <input *ngIf="editMode" type="button" value="Apply Changes" (click)="onSubmit(question)" />
-        <input *ngIf="!editMode" type="button" value="Create the Question!" (click)="onSubmit(question)" />
-        <input type="button" value="Cancel" (click)="onBack()" />
+        <button *ngIf="editMode" (click)="onSubmit(question)" class="btn btn-sm btn-success">Apply Changes
+          <span class="glyphicon glyphicon-floppy-saved"></span>
+        </button>
+        <button *ngIf="!editMode" (click)="onSubmit(question)" class="btn btn-sm btn-success" >Create the Question!
+            <span class="glyphicon glyphicon-file"></span>
+        </button>
+        <button (click)="onBack()" class="btn btn-sm btn-warning">Cancel
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
     </div>
 
     <app-answer-list *ngIf="editMode" [question]="question"></app-answer-list>

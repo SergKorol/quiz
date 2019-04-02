@@ -1,25 +1,32 @@
-<h2>{{title}}</h2>
 <div class="quiz-edit">
-  <div>
+  <h2>{{title}}</h2>
+  <div class="form-group">
     <label for="title">Quiz title:</label>
-      <br>
-      <input type="text" id="title" [(ngModel)]="quiz.Title" placeholder="choose a title..." >
-  </div>
-  <div>
-    <label for="description">Quiz description:</label>
     <br>
-    <input type="text" id="description" [(ngModel)]="quiz.Description" placeholder="enter a description..." >
+    <input type="text" id="title" [(ngModel)]="quiz.Title" placeholder="choose a title..." class="form-control">
   </div>
-  <div>
+  <div class="form-group">
+    <label for="description">Quiz desscription:</label>
+    <br>
+    <input type="text" id="description" [(ngModel)]="quiz.Description" placeholder="enter a description..." class="form-control">
+  </div>
+  <div class="form-group">
     <label for="text">Quiz informative text:</label>
     <br>
-    <textarea id="text" [(ngModel)]="quiz.Text" placeholder="enter a text..." ></textarea>
+    <textarea type="text" id="text" [(ngModel)]="quiz.Text" placeholder="enter a text..." class="form-control"></textarea>
   </div>
-  <div>
-      <input *ngIf="editMode" type="text" type="button" value="Apply Changes" (click)="onSubmit(quiz)" >
-      <input *ngIf="!editMode" type="text" type="button" value="Create the Quiz!" (click)="onSubmit(quiz)" >
-      <input type="text" type="button" value="Cancel" (click)="onBack()" >
+  <div class="form-group commands">
+    <button *ngIf="editMode" class="btn btn-success" (click)="onSubmit(quiz)">Apply changes
+      <span class="glyphicon glyphicon-save-file"></span>
+    </button>
+    <button *ngIf="!editMode" class="btn btn-success" (click)="onSubmit(quiz)">Create the Quiz!
+      <span class="glyphicon glyphicon-file"></span>
+    </button>
+    <button class="btn btn-warning" (click)="onBack()">Cancel
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
   </div>
-  <app-question-list *ngIf="editMode" [quiz]="quiz"></app-question-list>
-  <app-result-list  *ngIf="editMode" [quiz]="quiz"></app-result-list>
+
+  <app-question-list class="question-list" *ngIf="editMode" [quiz]="quiz"></app-question-list>
+  <app-result-list *ngIf="!editMode" [quiz]="quiz"></app-result-list>
 </div>
