@@ -1,6 +1,24 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar header-content">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a [routerLink]="['/home']"><img src="https://www.netspectrum.de/assets/aspnet_logo2-523c2b908e41f8073a92ffbe56458c8515a242b37d8144082295da4474cdcbc7.png" alt="logo"></a>
+        </div>
+        <!-- <app-quiz-search class="search-header" placeholder="Search
+        for a quiz..."></app-quiz-search> -->
+      </div>
+    </nav>
   </div>
-</body>
+  <div class="row">
+    <div class="col-sm-3">
+      <br>
+      <br>
+      <br>
+      <app-nav-menu></app-nav-menu>
+    </div>
+    <div class="col-sm-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
