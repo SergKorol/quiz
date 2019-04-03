@@ -40,9 +40,9 @@ export class QuestionListComponent implements OnChanges {
     this.router.navigate(['/question/create', this.quiz.Id]);
 }
 
-  onEdit(question: Question) {
-    this.router.navigate(['/question/edit', question.Id]);
-  }
+onEdit(question: Question) {
+  this.router.navigate(['/question/edit', question.Id]);
+}
 
   onDelete(question: Question) {
     if (confirm('Do you really want to delete this question?')) {
