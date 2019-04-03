@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using quiz.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace quiz
 {
@@ -35,6 +36,19 @@ namespace quiz
             // Add ApplicationDbContext.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add ASP.NET Identity support
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                opts =>
+                {
+                    opts.Password.RequireDigit = true;
+                    opts.Password.RequireLowercase = true;
+                    opts.Password.RequireUppercase = true;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequiredLength = 7;
+                }
+                ).AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,10 +71,12 @@ namespace quiz
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
                 // Create the Db if it doesn't exist and applies any pending migration.
                 dbContext.Database.Migrate();
                 // Seed the Db.
-                DbSeeder.Seed(dbContext);
+                DbSeeder.Seed(dbContext, roleManager, userManager);
             }
 
             app.UseHttpsRedirection();
