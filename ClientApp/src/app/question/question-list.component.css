@@ -1,7 +1,4 @@
-table.questions {
-  min-width: 500px;
-}
-
-td {
+.table thead tr th {
+  border-bottom: 2px solid #ecf0f1;
   width: 100%;
 }

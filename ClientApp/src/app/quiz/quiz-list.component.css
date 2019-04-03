@@ -68,3 +68,11 @@
 .panel-body.random .panel-heading .glyphicon::before {
   content: "\e104";
 }
+.img-circle {
+  padding: 5px 15px 5px 15px;
+}
+span {
+  display: inline-block;
+  max-width: 150px;
+  vertical-align: middle;
+}

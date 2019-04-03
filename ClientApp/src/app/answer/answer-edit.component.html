@@ -1,20 +1,34 @@
 <h2>{{title}}</h2>
-<div class="answer-edir">
-  <div>
-    <label for="text">Answer text:</label>
-    <br>
-    <textarea id="text" [(ngModel)]="answer.Text" placeholder="enter a suitable text..."></textarea>
+<div class="answer-edit">
+  <div class="form-group">
+      <label for="text">Answer text:</label>
+      <br />
+      <textarea id="text"
+                [(ngModel)]="answer.Text"
+                placeholder="enter a suitable text..."
+                class="form-control"
+                ></textarea>
   </div>
+
   <div>
-      <label for="value">Score value:</label>
-      <br>
-      <select name="value" id="value" [(ngModel)]="answer.Value">
-        <option *ngFor="let num of [-5,-4,-3,-2,-1,0,1,2,3,4,5]" [value]="num">{{num}}</option>
+      <label for="value">Score Value:</label>
+      <br />
+      <select id="value" name="value"
+              [(ngModel)]="answer.Value"
+              class="form-control"
+              >
+          <option *ngFor="let num of [-5,-4,-3,-2,-1,0,1,2,3,4,5]" [value]="num">{{num}}</option>
       </select>
   </div>
-  <div>
-    <input *ngIf="editMode"  type="button" value="Apply changes" (click)="onSubmit(answer)" >
-    <input *ngIf="!editMode"  type="button" value="Create the Answer" (click)="onSubmit(answer)" >
-    <input type="button" value="Cancel" (click)="onBack()" >
+  <div class="commands">
+    <button *ngIf="editMode" class="btn btn-success" (click)="onSubmit(answer)" >Apply changes
+      <span class="glyphicon glyphicon-save-file"></span>
+    </button>
+    <button *ngIf="!editMode" class="btn btn-primary" (click)="onSubmit(answer)">Create the Answer
+      <span class="glyphicon glyphicon-file"></span>
+    </button>
+    <button class="btn btn-warning" (click)="onBack()">Cancel
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
   </div>
 </div>

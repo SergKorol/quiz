@@ -1,6 +1,6 @@
 <h3>Answers</h3>
-<div *ngIf="answers.length > 0">
-  <table class="answers">
+<div *ngIf="answers.length > 0" class="table-responsive">
+  <table class="answers table table-hover">
     <thead>
       <tr>
         <th>Text</th>
@@ -12,9 +12,13 @@
       <tr *ngFor="let answer of answers">
         <td>{{answer.Text}}</td>
         <td>{{answer.Value}}</td>
-        <td>
-          <input type="button" value="Edit" (click)="onEdit(answer)">
-          <input type="button" value="Delete" (click)="onDelete(answer)">
+        <td class="btn-group">
+          <button class="btn btn-primary" (click)="onEdit(answer)">Edit
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button class="btn btn-danger" (click)="onDelete(answer)">Delete
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
         </td>
       </tr>
     </tbody>
