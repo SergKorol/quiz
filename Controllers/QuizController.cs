@@ -6,13 +6,18 @@ using Newtonsoft.Json;
 using quiz.Data;
 using quiz.ViewModels;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace quiz.Controllers
 {
     public class QuizController : BaseApiController
     {
         #region Constructor
-        public QuizController(ApplicationDbContext context) : base(context) { }
+        public QuizController(ApplicationDbContext context,
+                              RoleManager<IdentityRole> roleManager,
+                              UserManager<ApplicationUser> userManager,
+                              IConfiguration configuration) : base(context, roleManager, userManager, configuration) { }
         #endregion Constructor
 
 

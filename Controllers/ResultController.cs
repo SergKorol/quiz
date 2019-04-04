@@ -6,14 +6,18 @@ using quiz.ViewModels;
 using quiz.Data;
 using System.Linq;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace quiz.Controllers
 {
     public class ResultController : BaseApiController
     {
         #region Constructor
-        public ResultController(ApplicationDbContext context)
-            : base(context) { }
+        public ResultController(ApplicationDbContext context,
+                                RoleManager<IdentityRole> roleManager,
+                                UserManager<ApplicationUser> userManager,
+                                IConfiguration configuration) : base(context, roleManager, userManager, configuration) { }
         #endregion
 
         #region RESTful conventions methods

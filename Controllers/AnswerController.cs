@@ -6,13 +6,18 @@ using quiz.ViewModels;
 using quiz.Data;
 using System.Linq;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace quiz.Controllers
 {
     public class AnswerController : BaseApiController
     {
         #region Constructor
-        public AnswerController(ApplicationDbContext context) : base(context) { }
+        public AnswerController(ApplicationDbContext context,
+                                RoleManager<IdentityRole> roleManager,
+                                UserManager<ApplicationUser> userManager,
+                                IConfiguration configuration) : base(context, roleManager, userManager, configuration) { }
         #endregion
 
 
