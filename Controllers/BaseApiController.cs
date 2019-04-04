@@ -14,12 +14,14 @@ namespace quiz.Controllers
     public class BaseApiController : Controller
     {
         #region Constructor
-        public BaseApiController(ApplicationDbContext context,
-                                 RoleManager<IdentityRole> roleManager,
-                                 UserManager<ApplicationUser> userManager,
-                                 IConfiguration configuration)
+        public BaseApiController(
+            ApplicationDbContext context,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration
+            )
         {
-            // Instantiate the ApplicationDbContext through DI
+            // Instantiate the required classes through DI
             DbContext = context;
             RoleManager = roleManager;
             UserManager = userManager;
@@ -27,20 +29,20 @@ namespace quiz.Controllers
 
             // Instantiate a single JsonSerializerSettings object
             // that can be reused multiple times.
-
             JsonSettings = new JsonSerializerSettings()
             {
                 Formatting = Formatting.Indented
             };
+
         }
         #endregion
 
         #region Shared Properties
         protected ApplicationDbContext DbContext { get; private set; }
-        public JsonSerializerSettings JsonSettings { get; private set; }
         protected RoleManager<IdentityRole> RoleManager { get; private set; }
         protected UserManager<ApplicationUser> UserManager { get; private set; }
         protected IConfiguration Configuration { get; private set; }
+        protected JsonSerializerSettings JsonSettings { get; private set; }
         #endregion
     }
 }

@@ -42,7 +42,6 @@ namespace quiz
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Add ASP.NET Identity support
-
             services.AddIdentity<ApplicationUser, IdentityRole>(
                 opts =>
                 {
@@ -51,17 +50,17 @@ namespace quiz
                     opts.Password.RequireUppercase = true;
                     opts.Password.RequireNonAlphanumeric = false;
                     opts.Password.RequiredLength = 7;
-                }
-                ).AddEntityFrameworkStores<ApplicationDbContext>();
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Add Authentication with JWT Tokens
-
             services.AddAuthentication(opts =>
             {
                 opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
+            })
+            .AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
@@ -69,16 +68,18 @@ namespace quiz
                 {
                     // standard configuration
                     ValidIssuer = Configuration["Auth:Jwt:Issuer"],
-                    ValidAudience = Configuration["Auth:Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])),
+                        Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])),
+                    ValidAudience = Configuration["Auth:Jwt:Audience"],
                     ClockSkew = TimeSpan.Zero,
+
                     // security switches
                     RequireExpirationTime = true,
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = true
                 };
+                cfg.IncludeErrorDetails = true;
             });
         }
 
