@@ -25,7 +25,26 @@ export class AuthService {
       // space-separated list of scopes for which the token is issued
       scope: 'offline_access profile email'
     };
+    return this.getAuthFromServer(url, data);
+  }
 
+  // try to refresh token
+  refreshToken(): Observable<boolean> {
+    const url = 'api/token/auth';
+    const data = {
+      client_id: this.clientId,
+      // required when signing up with username/password
+      grant_type: 'refresh_token',
+      refresh_token: this.getAuth().refresh_token,
+      // space-separated list of scopes for which the token is issued
+      scope: 'offline_access profile email'
+    };
+
+    return this.getAuthFromServer(url, data);
+  }
+
+  // retrieve the access & refresh tokens from the server
+  getAuthFromServer(url: string, data: any): Observable<boolean> {
     return this.http.post<TokenResponse>(url, data).pipe(
       map((res) => {
         const token = res && res.token;
@@ -36,12 +55,14 @@ export class AuthService {
           // successful login
           return true;
         }
+        console.log('Unauthorized');
+        return false;
       }),
       catchError(err => {
         console.log('Unauthorized');
         return throwError(err);
-      }
-      ));
+      })
+    );
   }
 
   // performs the logout

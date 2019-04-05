@@ -24,6 +24,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AnswerEditComponent } from './answer/answer-edit.component';
 import { ResultEditComponent } from './result/result-edit.component';
+import { AuthResponseInterceptor } from './services/auth.response.interceptor';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,12 @@ import { ResultEditComponent } from './result/result-edit.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthResponseInterceptor,
+      multi: true
+
     }
   ],
   bootstrap: [AppComponent]
