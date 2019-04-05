@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
 
   authKey = 'auth';
@@ -37,9 +36,49 @@ export class AuthService {
           // successful login
           return true;
         }
-      }));
-
-
-
+      }),
+      catchError(err => {
+        console.log('Unauthorized');
+        return throwError(err);
+      }
+      ));
   }
+
+  // performs the logout
+  logout(): boolean {
+    this.setAuth(null);
+    return true;
+  }
+  // Persist auth into localStorage or removes it if a NULL argument is given
+  setAuth(auth: TokenResponse | null): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      if (auth) {
+        localStorage.setItem(
+          this.authKey,
+          JSON.stringify(auth));
+      } else {
+        localStorage.removeItem(this.authKey);
+      }
+    }
+    return true;
+  }
+
+
+  // Retrieves the auth JSON object (or NULL if none)
+  getAuth(): TokenResponse | null {
+    if (isPlatformBrowser(this.platformId)) {
+      const i = localStorage.getItem(this.authKey);
+      if (i) { return JSON.parse(i); }
+
+    }
+    return null;
+  }
+
+  // Returns TRUE if the user is logged in, FALSE otherwise.
+  isLoggedIn(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.authKey) != null;
+    }
+  }
+
 }

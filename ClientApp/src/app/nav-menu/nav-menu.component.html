@@ -32,16 +32,21 @@
             <span class="glyphicon glyphicon-info-sign"></span> About
         </a>
     </li>
-    <li class="nav-item" [routerLinkActive]='["link-active"]'>
+    <li *ngIf="!this.auth.isLoggedIn()"  class="nav-item" [routerLinkActive]='["link-active"]'>
         <a class="nav-link text-dark" [routerLink]='["/login"]'>
             <span class="glyphicon glyphicon-log-in"></span> Login
         </a>
     </li>
-    <li class="nav-item" [routerLinkActive]='["link-active"]'>
+    <li *ngIf="this.auth.isLoggedIn()"  class="nav-item" [routerLinkActive]='["link-active"]'>
         <a class="nav-link text-dark" [routerLink]='["/quiz/create"]'>
-            <span class="glyphicon glyphicon-pencil"></span> Create Quiz
+            <span class="glyphicon glyphicon-pencil"></span> Create a Quiz
         </a>
     </li>
+    <li *ngIf="this.auth.isLoggedIn()"  class="nav-item" [routerLinkActive]='["link-active"]'>
+      <a class="nav-link text-dark" (click)="logout()" >
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+      </a>
+  </li>
     </ul>
   </div>
 </div>

@@ -1,3 +1,5 @@
+import { AuthInterceptor } from './services/auth.interceptor';
+import { AuthService } from './services/auth.service';
 import { QuizSearchComponent } from './quiz/quiz-search.component';
 import { ResultListComponent } from './result/result-list.component';
 import { AnswerListComponent } from './answer/answer-list.component';
@@ -12,7 +14,7 @@ import { QuizListComponent } from './quiz/quiz-list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -55,20 +57,26 @@ import { ResultEditComponent } from './result/result-edit.component';
       { path: 'quiz/create', component: QuizEditComponent },
       { path: 'quiz/edit/:id', component: QuizEditComponent },
       { path: 'quiz/:id', component: QuizComponent },
-      { path: 'question/create/:id', component: QuestionEditComponent},
-      { path: 'question/edit/:id', component: QuestionEditComponent},
+      { path: 'question/create/:id', component: QuestionEditComponent },
+      { path: 'question/edit/:id', component: QuestionEditComponent },
       { path: 'answer/create/:id', component: AnswerEditComponent },
       { path: 'answer/edit/:id', component: AnswerEditComponent },
       { path: 'result/create/:id', component: ResultEditComponent },
       { path: 'result/edit/:id', component: ResultEditComponent },
       { path: 'about', component: AboutComponent },
-      { path: 'login', component: LoginComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: '**', component: PagenotfoundComponent}
+      { path: 'login', component: LoginComponent },
+      { path: '**', component: PagenotfoundComponent }
     ])
   ],
-  providers: [],
+  providers: [AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

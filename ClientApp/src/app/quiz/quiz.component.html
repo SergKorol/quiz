@@ -45,7 +45,7 @@
           <span class="glyphicon glyphicon-backward"></span>
           &nbsp; Back
         </a>
-        <div class="edit btn-group-justified">
+        <div *ngIf="auth.isLoggedIn()"  class="edit btn-group-justified">
           <button class="btn btn-sm btn-warning" (click)="onEdit()">Edit
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
