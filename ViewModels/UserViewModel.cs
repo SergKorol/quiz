@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
 namespace quiz.ViewModels
 {
     [JsonObject(MemberSerialization.OptOut)]
@@ -8,6 +8,7 @@ namespace quiz.ViewModels
         #region Constructor
         public UserViewModel()
         {
+
         }
         #endregion
 

@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using quiz.Data.Models;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 
 namespace quiz.Controllers
@@ -48,6 +50,107 @@ namespace quiz.Controllers
                 default:
                     // not supported - return a HTTP 401 (Unauthorized)
                     return new UnauthorizedResult();
+            }
+        }
+
+        [HttpPost("Facebook")]
+        public async Task<IActionResult> Facebook([FromBody]ExternalLoginRequestViewModel model)
+        {
+            try
+            {
+                var fbAPI_url = "https://graph.facebook.com/v2.10/";
+                var fbAPI_queryString = String.Format(
+                    "me?scope=email&access_token={0}&fields=id,name,email",
+                    model.access_token);
+                string result = null;
+
+                // fetch the user info from Facebook Graph v2.10
+                using (var c = new HttpClient())
+                {
+                    c.BaseAddress = new Uri(fbAPI_url);
+                    var response = await c
+                        .GetAsync(fbAPI_queryString);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        result = await response.Content.ReadAsStringAsync();
+                    }
+                    else throw new Exception("Authentication error");
+                }
+                // load the resulting Json into a dictionary
+                var epInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+                var info = new UserLoginInfo("facebook", epInfo["id"], "Facebook");
+
+                // Check if this user already registered himself with this external provider before
+                var user = await UserManager.FindByLoginAsync(
+                    info.LoginProvider, info.ProviderKey);
+                if (user == null)
+                {
+                    // If we reach this point, it means that this user never tried to logged in
+                    // using this external provider. However, it could have used other providers 
+                    // and /or have a local account. 
+                    // We can find out if that's the case by looking for his e-mail address.
+
+                    // Lookup if there's an username with this e-mail address in the Db
+                    user = await UserManager.FindByEmailAsync(epInfo["email"]);
+                    if (user == null)
+                    {
+                        // No user has been found: register a new user using the info 
+                        //  retrieved from the provider
+                        DateTime now = DateTime.Now;
+                        var username = String.Format("FB{0}{1}",
+                                epInfo["id"],
+                                Guid.NewGuid().ToString("N")
+                            );
+                        user = new ApplicationUser()
+                        {
+                            SecurityStamp = Guid.NewGuid().ToString(),
+                            // ensure the user will have an unique username
+                            UserName = username,
+                            Email = epInfo["email"],
+                            DisplayName = epInfo["name"],
+                            CreatedDate = now,
+                            LastModifiedDate = now
+                        };
+
+                        // Add the user to the Db with a random password
+                        await UserManager.CreateAsync(user,
+                            DataHelper.GenerateRandomPassword());
+
+                        // Assign the user to the 'RegisteredUser' role.
+                        await UserManager.AddToRoleAsync(user, "RegisteredUser");
+
+                        // Remove Lockout and E-Mail confirmation
+                        user.EmailConfirmed = true;
+                        user.LockoutEnabled = false;
+
+                        // Persist everything into the Db
+                        DbContext.SaveChanges();
+                    }
+                    // Register this external provider to the user
+                    var ir = await UserManager.AddLoginAsync(user, info);
+                    if (ir.Succeeded)
+                    {
+                        // Persist everything into the Db
+                        DbContext.SaveChanges();
+                    }
+                    else throw new Exception("Authentication error");
+                }
+
+                // create the refresh token
+                var rt = CreateRefreshToken(model.client_id, user.Id);
+
+                // add the new refresh token to the DB
+                DbContext.Tokens.Add(rt);
+                DbContext.SaveChanges();
+
+                // create & return the access token
+                var t = CreateAccessToken(user.Id, rt.Value);
+                return Json(t);
+            }
+            catch (Exception ex)
+            {
+                // return a HTTP Status 400 (Bad Request) to the client
+                return BadRequest(new { Error = ex.Message });
             }
         }
 

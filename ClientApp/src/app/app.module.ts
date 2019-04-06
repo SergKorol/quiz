@@ -1,3 +1,4 @@
+import { RegisterComponent } from './user/register.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth.service';
 import { QuizSearchComponent } from './quiz/quiz-search.component';
@@ -25,6 +26,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AnswerEditComponent } from './answer/answer-edit.component';
 import { ResultEditComponent } from './result/result-edit.component';
 import { AuthResponseInterceptor } from './services/auth.response.interceptor';
+import { LoginFacebookComponent } from './login/login.facebook.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { AuthResponseInterceptor } from './services/auth.response.interceptor';
     AnswerEditComponent,
     ResultListComponent,
     ResultEditComponent,
-    QuizSearchComponent
+    QuizSearchComponent,
+    RegisterComponent,
+    LoginFacebookComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -68,6 +72,7 @@ import { AuthResponseInterceptor } from './services/auth.response.interceptor';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       { path: '**', component: PagenotfoundComponent }
     ])
   ],
