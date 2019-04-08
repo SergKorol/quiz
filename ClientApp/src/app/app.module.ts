@@ -27,6 +27,7 @@ import { AnswerEditComponent } from './answer/answer-edit.component';
 import { ResultEditComponent } from './result/result-edit.component';
 import { AuthResponseInterceptor } from './services/auth.response.interceptor';
 import { LoginFacebookComponent } from './login/login.facebook.component';
+import { LoginExternalprovidersComponent } from './login/login.externalproviders.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { LoginFacebookComponent } from './login/login.facebook.component';
     ResultEditComponent,
     QuizSearchComponent,
     RegisterComponent,
-    LoginFacebookComponent
+    LoginFacebookComponent,
+    LoginExternalprovidersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

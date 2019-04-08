@@ -89,34 +89,7 @@ namespace quiz
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // Add Authentication with JWT Tokens
-            services.AddAuthentication(opts =>
-            {
-                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    // standard configuration
-                    ValidIssuer = Configuration["Auth:Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])),
-                    ValidAudience = Configuration["Auth:Jwt:Audience"],
-                    ClockSkew = TimeSpan.Zero,
 
-                    // security switches
-                    RequireExpirationTime = true,
-                    ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateAudience = true
-                };
-                cfg.IncludeErrorDetails = true;
-            });
 
         }
 

@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
-
+using quiz.Data.Models;
 
 namespace quiz.Controllers
 {
