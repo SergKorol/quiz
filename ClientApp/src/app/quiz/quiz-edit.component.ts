@@ -47,7 +47,7 @@ export class QuizEditComponent implements OnInit {
                   this.title = 'Create a new Quiz';
                 }
                }
-onSubmit(quiz: Quiz) {
+onSubmit() {
   // build a temporary quiz object from form values
   const tempQuiz = <Quiz>{};
   tempQuiz.Title = this.form.value.Title;
